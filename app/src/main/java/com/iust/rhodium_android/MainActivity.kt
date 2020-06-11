@@ -14,6 +14,8 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.iust.rhodium_android.data.BaseApplication
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "infos ...", Toast.LENGTH_SHORT).show()
             getinfo()
         }
+        var db1 = BaseApplication().appDatabase?.cellPowerDao()?.getAll()
+
     }
     private fun getinfo(){
         Log.d("MyActivity",tm.getNetworkOperator())
