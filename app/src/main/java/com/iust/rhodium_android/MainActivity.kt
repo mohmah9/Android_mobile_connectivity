@@ -4,8 +4,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -45,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         db = AppDatabase.getAppDataBase(context = this)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val Actionbutton : Button = findViewById(R.id.info_button)
+        val Mapbutton : Button = findViewById(R.id.map_btn)
+
         val text2 : TextView = findViewById(R.id.text2)
         getLastLocation()
         Actionbutton.setOnClickListener{
@@ -56,6 +60,11 @@ class MainActivity : AppCompatActivity() {
             }
             text2.text = "repeat is : " + repeat.toString()
         }
+        Mapbutton.setOnClickListener{
+            var intent = Intent(this,map_act::class.java)
+            startActivity(intent)
+        }
+
         handler.postDelayed(object : Runnable {
             override fun run() {
                 if (repeat == 1){
@@ -121,7 +130,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getinfo(){
-        var ci1 = tm.allCellInfo
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            permissiongranter()
+        }
+        var ci1 =    tm.allCellInfo
         Log.d("MyActivity", ci1.toString())
         val out = getCellInfo(ci1.get(0))
         Log.d("MyActivity",out.toString())
@@ -168,6 +191,20 @@ class MainActivity : AppCompatActivity() {
             }).check()
     }
     private fun getNetworkClass(): String {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            permissiongranter()
+        }
         val networkType = tm.getDataNetworkType()
         when (networkType) {
             TelephonyManager.NETWORK_TYPE_GPRS -> return "GPRS(2G)"
@@ -217,26 +254,30 @@ class MainActivity : AppCompatActivity() {
             map["Level_of_strength"]=cellSignalGsm.level.toString()
             map["type"]="2"
         } else if (cellInfo is CellInfoLte) {
-            val cellIdentityLte = cellInfo.cellIdentity
-            val cellSignalLte = cellInfo.cellSignalStrength
-            additional_info = ("cell identity " + cellIdentityLte.ci + "\n"
-                    + "MCC " + cellIdentityLte.mcc + "\n"
-                    + "MNC " + cellIdentityLte.mnc + "\n"
-                    + "physical cell " + cellIdentityLte.pci + "\n"
-                    + "TAC " + cellIdentityLte.tac + "\n"
-                    + "RSRP " + cellSignalLte.rsrp + "\n"
-                    + "RSRQ " + cellSignalLte.rsrq + "\n"
-                    + "CINR " + cellSignalLte.rssnr + "\n"
-                    + "level of strength" + cellSignalLte.level+"\n")
-            map["cell_identity"]=cellIdentityLte.ci.toString()
-            map["MCC"]=cellIdentityLte.mcc.toString()
-            map["MNC"]=cellIdentityLte.mnc.toString()
-            map["TAC"]=cellIdentityLte.tac.toString()
-            map["RSRP"]=cellSignalLte.rsrp.toString()
-            map["RSRQ"]=cellSignalLte.rsrq.toString()
-            map["CINR"]=cellSignalLte.rssnr.toString()
-            map["Level_of_strength"]=cellSignalLte.level.toString()
-            map["type"]="4"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val cellIdentityLte = cellInfo.cellIdentity
+                val cellSignalLte = cellInfo.cellSignalStrength
+                additional_info = ("cell identity " + cellIdentityLte.ci + "\n"
+                        + "MCC " + cellIdentityLte.mcc + "\n"
+                        + "MNC " + cellIdentityLte.mnc + "\n"
+                        + "physical cell " + cellIdentityLte.pci + "\n"
+                        + "TAC " + cellIdentityLte.tac + "\n"
+                        + "RSRP " + cellSignalLte.rsrp + "\n"
+                        + "RSRQ " + cellSignalLte.rsrq + "\n"
+                        + "CINR " + cellSignalLte.rssnr + "\n"
+                        + "level of strength" + cellSignalLte.level + "\n")
+                map["cell_identity"] = cellIdentityLte.ci.toString()
+                map["MCC"] = cellIdentityLte.mcc.toString()
+                map["MNC"] = cellIdentityLte.mnc.toString()
+                map["TAC"] = cellIdentityLte.tac.toString()
+
+                map["RSRP"] = cellSignalLte.rsrp.toString()
+
+                map["RSRQ"] = cellSignalLte.rsrq.toString()
+                map["CINR"] = cellSignalLte.rssnr.toString()
+                map["Level_of_strength"] = cellSignalLte.level.toString()
+                map["type"] = "4"
+            }
         } else if (cellInfo is CellInfoWcdma) {
             val cellIdentityWcdma = cellInfo.cellIdentity
             val cellSignalWcdma = cellInfo.cellSignalStrength

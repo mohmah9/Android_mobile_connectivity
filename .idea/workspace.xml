@@ -7,13 +7,18 @@
       </config>
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="93122192-fddf-4ca0-aa5d-720578d29ce7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_location_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_places_placereport_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_17_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_wear_wear_1_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_wearable_wearable_2_5_0_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__org_osmdroid_osmdroid_android_6_1_6_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/map_act.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_map_act.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values-round/strings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -32,15 +37,21 @@
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/data/model/CellPower.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/data/model/CellPower.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_API_28" />
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_API_29" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -63,6 +74,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="5" />
+    <option name="y" value="23" />
+    <option name="width" value="1760" />
+    <option name="height" value="828" />
+  </component>
   <component name="ProjectId" id="1dAMnZA7afHdS4QqJhOdpYyN9fs" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -73,13 +90,25 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1591986247814" />
+    <property name="not.eligible.for.single.variant.sync" value="true" />
+    <property name="project.structure.last.edited" value="SDK Location" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.iust.rhodium_android.data" />
+    </key>
+    <key name="android.template.-17705492">
+      <recent name="com.iust.rhodium_android" />
     </key>
   </component>
   <component name="RunManager">
@@ -156,6 +185,14 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="245" y="176" key="#PSD" timestamp="1592000654648">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="245" y="176" key="#PSD/0.23.1440.828@0.23.1440.828" timestamp="1592000654648" />
+    <state x="458" y="191" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1592001855964">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="458" y="191" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.828@0.23.1440.828" timestamp="1592001855964" />
     <state x="742" y="203" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1591881234953">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -168,21 +205,29 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="543" y="313" width="824" height="487" key="AndroidCreateResourceDirectoryDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1591878088097" />
-    <state width="937" height="276" key="GridCell.Tab.0.bottom" timestamp="1591970189292">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state width="1398" height="172" key="GridCell.Tab.0.bottom" timestamp="1592004797325">
+      <screen x="0" y="23" width="1440" height="828" />
     </state>
+    <state width="1398" height="172" key="GridCell.Tab.0.bottom/0.23.1440.828@0.23.1440.828" timestamp="1592004797325" />
     <state width="937" height="276" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189292" />
-    <state width="937" height="276" key="GridCell.Tab.0.center" timestamp="1591970189291">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state width="1398" height="172" key="GridCell.Tab.0.center" timestamp="1592004797324">
+      <screen x="0" y="23" width="1440" height="828" />
     </state>
+    <state width="1398" height="172" key="GridCell.Tab.0.center/0.23.1440.828@0.23.1440.828" timestamp="1592004797324" />
     <state width="937" height="276" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189291" />
-    <state width="937" height="276" key="GridCell.Tab.0.left" timestamp="1591970189291">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state width="1398" height="172" key="GridCell.Tab.0.left" timestamp="1592004797323">
+      <screen x="0" y="23" width="1440" height="828" />
     </state>
+    <state width="1398" height="172" key="GridCell.Tab.0.left/0.23.1440.828@0.23.1440.828" timestamp="1592004797323" />
     <state width="937" height="276" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189291" />
-    <state width="937" height="276" key="GridCell.Tab.0.right" timestamp="1591970189291">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state width="1398" height="172" key="GridCell.Tab.0.right" timestamp="1592004797324">
+      <screen x="0" y="23" width="1440" height="828" />
     </state>
+    <state width="1398" height="172" key="GridCell.Tab.0.right/0.23.1440.828@0.23.1440.828" timestamp="1592004797324" />
     <state width="937" height="276" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189291" />
+    <state x="390" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1592000302235">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="390" y="269" key="com.intellij.ide.util.TipDialog/0.23.1440.828@0.23.1440.828" timestamp="1592000302235" />
   </component>
 </project>
