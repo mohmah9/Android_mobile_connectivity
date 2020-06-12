@@ -2,55 +2,88 @@ package com.iust.rhodium_android
 
 import android.Manifest
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.telephony.*
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.iust.rhodium_android.data.AppDatabase
+import com.iust.rhodium_android.data.model.CellPower
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.iust.rhodium_android.data.BaseApplication
-
 
 
 class MainActivity : AppCompatActivity() {
 
     private var permit_s =1
+    var repeat : Int = 0
     lateinit var tm : TelephonyManager
+    private var db: AppDatabase? = null
+    var handler: Handler = Handler()
+    val delayer = 10000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         permissiongranter()
         tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        db = AppDatabase.getAppDataBase(context = this)
         val Actionbutton : Button = findViewById(R.id.info_button)
         Actionbutton.setOnClickListener{
             Toast.makeText(this, "infos ...", Toast.LENGTH_SHORT).show()
-            getinfo()
+            if (repeat==0){
+                repeat=1
+            }else{
+                repeat=0
+            }
         }
-        var db1 = BaseApplication().appDatabase?.cellPowerDao()?.getAll()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+//                Log.d("MyActivity",repeat.toString())
+                val text2 : TextView = findViewById(R.id.text2)
+                text2.text = "repeat is : " + repeat.toString()
+                if (repeat == 1){
+                    getinfo()
+                }
+                handler.postDelayed(this, delayer.toLong())
+            }
+        }, delayer.toLong())
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        repeat =1
+    }
+
+    override fun onStop() {
+        super.onStop()
+        repeat=0
+    }
     private fun getinfo(){
-        Log.d("MyActivity",tm.getNetworkOperator())
-        var netclass = getNetworkClass()
-        Log.d("MyActivity",netclass)
         var ci1 = tm.allCellInfo
         Log.d("MyActivity", ci1.toString())
         val out = getCellInfo(ci1.get(0))
-        Log.d("MyActivity",out)
-        val plmn_num : String = tm.getNetworkOperator()
-        val final = "technology : " +netclass + "\n" +
-                     out +
-                    "plmn : " +plmn_num
-
+        Log.d("MyActivity",out.toString())
+        var my_info : CellPower
+        if (out["type"]=="2"){
+            my_info = CellPower(latitude = 40,longitude = 35,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSSI = out["RSSI"] ,RxLev = out["RxLev"])
+        }else if (out["type"]=="3"){
+            my_info = CellPower(latitude = 40,longitude = 35,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSCP = out["RSCP"])
+        }else{
+            my_info = CellPower(latitude = 40,longitude = 35,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"])
+        }
         val INFOtext : TextView = findViewById(R.id.info_text)
-        INFOtext.text = final
+        db?.cellPowerDao()?.insert(my_info)
+        var my_info2 = db?.cellPowerDao()?.getAll()
+        INFOtext.text = my_info2.toString() + "\n"
     }
+
     private fun permissiongranter() {
         Dexter.withContext(this)
             .withPermissions(
@@ -104,7 +137,10 @@ class MainActivity : AppCompatActivity() {
             else -> return "No network"
         }
     }
-    private fun getCellInfo(cellInfo: CellInfo): String {
+    private fun getCellInfo(cellInfo: CellInfo): HashMap<Any? ,String?> {
+        var netclass = getNetworkClass()
+        Log.d("MyActivity",netclass)
+        var map = hashMapOf<Any?, String?>()
         var additional_info: String =""
         if (cellInfo is CellInfoGsm) {
             val cellIdentityGsm = cellInfo.cellIdentity
@@ -115,9 +151,16 @@ class MainActivity : AppCompatActivity() {
                     + "LAC " + cellIdentityGsm.lac + "\n"
                     + "RSSI " + cellSignalGsm.dbm + "\n"
                     + "RXlex  " + cellSignalGsm.asuLevel + "\n"
-                    + "level of strength " + cellSignalGsm.level + "\n"
+                    + "level of strength " + cellSignalGsm.level + "\n")
 
-                    )
+            map["cell_identity"]=cellIdentityGsm.cid.toString()
+            map["MCC"]=cellIdentityGsm.mcc.toString()
+            map["MNC"]=cellIdentityGsm.mnc.toString()
+            map["LAC"]=cellIdentityGsm.lac.toString()
+            map["RSSI"]=cellSignalGsm.dbm.toString()
+            map["RxLev"]=cellSignalGsm.asuLevel.toString()
+            map["Level_of_strength"]=cellSignalGsm.level.toString()
+            map["type"]="2"
         } else if (cellInfo is CellInfoLte) {
             val cellIdentityLte = cellInfo.cellIdentity
             val cellSignalLte = cellInfo.cellSignalStrength
@@ -129,8 +172,16 @@ class MainActivity : AppCompatActivity() {
                     + "RSRP " + cellSignalLte.rsrp + "\n"
                     + "RSRQ " + cellSignalLte.rsrq + "\n"
                     + "CINR " + cellSignalLte.rssnr + "\n"
-                    + "level of strength" + cellSignalLte.level+"\n"
-                    )
+                    + "level of strength" + cellSignalLte.level+"\n")
+            map["cell_identity"]=cellIdentityLte.ci.toString()
+            map["MCC"]=cellIdentityLte.mcc.toString()
+            map["MNC"]=cellIdentityLte.mnc.toString()
+            map["TAC"]=cellIdentityLte.tac.toString()
+            map["RSRP"]=cellSignalLte.rsrp.toString()
+            map["RSRQ"]=cellSignalLte.rsrq.toString()
+            map["CINR"]=cellSignalLte.rssnr.toString()
+            map["Level_of_strength"]=cellSignalLte.level.toString()
+            map["type"]="4"
         } else if (cellInfo is CellInfoWcdma) {
             val cellIdentityWcdma = cellInfo.cellIdentity
             val cellSignalWcdma = cellInfo.cellSignalStrength
@@ -143,7 +194,18 @@ class MainActivity : AppCompatActivity() {
                     + "level of strength" + cellSignalWcdma.level + "\n"
 //                    + "local area umts" + cellIdentityWcdma.lac + "\n"
                     )
+            map["cell_identity"]=cellIdentityWcdma.cid.toString()
+            map["MCC"]=cellIdentityWcdma.mcc.toString()
+            map["MNC"]=cellIdentityWcdma.mnc.toString()
+            map["LAC"]=cellIdentityWcdma.lac.toString()
+            map["RSCP"]=cellSignalWcdma.dbm.toString()
+//            map["RxLev"]=cellSignalGsm.asuLevel
+            map["Level_of_strength"]=cellSignalWcdma.level.toString()
+            map["type"]="3"
         }
-        return additional_info
+        map["net_type"]=netclass
+        map["plmn"] = tm.getNetworkOperator().toString()
+        return map
     }
 }
+
