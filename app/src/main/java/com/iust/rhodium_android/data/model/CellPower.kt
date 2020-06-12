@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 data class CellPower(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    val latitude : Int,
-    val longitude : Int,
+    val latitude : Double,
+    val longitude : Double,
     val cell_identity : String?,
     val MCC : String?,
     val MNC : String?,
@@ -23,7 +23,8 @@ data class CellPower(
     val TAC : String?=null,
     val RSRP : String?=null,
     val RSRQ : String?=null,
-    val CINR : String?=null
+    val CINR : String?=null,
+    val status : String?=null
 
 
 )

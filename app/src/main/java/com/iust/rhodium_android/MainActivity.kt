@@ -1,9 +1,14 @@
 package com.iust.rhodium_android
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.telephony.*
 import android.util.Log
 import android.widget.Button
@@ -11,12 +16,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.*
 import com.iust.rhodium_android.data.AppDatabase
 import com.iust.rhodium_android.data.model.CellPower
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,13 +34,19 @@ class MainActivity : AppCompatActivity() {
     private var db: AppDatabase? = null
     var handler: Handler = Handler()
     val delayer = 10000
+    lateinit var mFusedLocationClient: FusedLocationProviderClient
+    var latitude : Double = 35.0
+    var longitude : Double = 40.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         permissiongranter()
         tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         db = AppDatabase.getAppDataBase(context = this)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val Actionbutton : Button = findViewById(R.id.info_button)
+        val text2 : TextView = findViewById(R.id.text2)
+        getLastLocation()
         Actionbutton.setOnClickListener{
             Toast.makeText(this, "infos ...", Toast.LENGTH_SHORT).show()
             if (repeat==0){
@@ -41,12 +54,10 @@ class MainActivity : AppCompatActivity() {
             }else{
                 repeat=0
             }
+            text2.text = "repeat is : " + repeat.toString()
         }
         handler.postDelayed(object : Runnable {
             override fun run() {
-//                Log.d("MyActivity",repeat.toString())
-                val text2 : TextView = findViewById(R.id.text2)
-                text2.text = "repeat is : " + repeat.toString()
                 if (repeat == 1){
                     getinfo()
                 }
@@ -65,6 +76,50 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
         repeat=0
     }
+
+    private fun isLocationEnabled(): Boolean {
+        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation() {
+        if (isLocationEnabled()) {
+
+            mFusedLocationClient.lastLocation.addOnCompleteListener(this) { task ->
+                var location: Location? = task.result
+                requestNewLocationData()
+            }
+        } else {
+            Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        var mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 9000
+        mLocationRequest.fastestInterval = 5000
+//        mLocationRequest.numUpdates = 1
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mFusedLocationClient!!.requestLocationUpdates(
+            mLocationRequest, mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            var mLastLocation: Location = locationResult.lastLocation
+            latitude = mLastLocation.latitude
+            longitude= mLastLocation.longitude
+        }
+    }
+
     private fun getinfo(){
         var ci1 = tm.allCellInfo
         Log.d("MyActivity", ci1.toString())
@@ -72,11 +127,11 @@ class MainActivity : AppCompatActivity() {
         Log.d("MyActivity",out.toString())
         var my_info : CellPower
         if (out["type"]=="2"){
-            my_info = CellPower(latitude = 40,longitude = 35,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSSI = out["RSSI"] ,RxLev = out["RxLev"])
+            my_info = CellPower(latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSSI = out["RSSI"] ,RxLev = out["RxLev"])
         }else if (out["type"]=="3"){
-            my_info = CellPower(latitude = 40,longitude = 35,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSCP = out["RSCP"])
+            my_info = CellPower(latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSCP = out["RSCP"])
         }else{
-            my_info = CellPower(latitude = 40,longitude = 35,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"])
+            my_info = CellPower(latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"])
         }
         val INFOtext : TextView = findViewById(R.id.info_text)
         db?.cellPowerDao()?.insert(my_info)
