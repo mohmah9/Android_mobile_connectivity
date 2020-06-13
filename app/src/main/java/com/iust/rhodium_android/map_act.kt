@@ -1,19 +1,21 @@
 package com.iust.rhodium_android
 
+//import org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener
+//import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.iust.rhodium_android.data.AppDatabase
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
-//import org.osmdroid.views.overlay.ItemizedIconOverlay.OnItemGestureListener
-//import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
 import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.compass.CompassOverlay
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider
@@ -31,12 +33,16 @@ class map_act : AppCompatActivity() {
     private var map: MapView? = null
     private val mLocationOverlay: MyLocationNewOverlay? = null
     private val mRotationGestureOverlay: RotationGestureOverlay? = null
+
+    private var db: AppDatabase? = null
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         //handle permissions first, before map is created. not depicted here
 
         //load/initialize the osmdroid configuration, this can be done
+        db = AppDatabase.getAppDataBase(context = this)
+
         val ctx = applicationContext
         Configuration.getInstance()
             .load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx))
@@ -78,6 +84,8 @@ class map_act : AppCompatActivity() {
                 GeoPoint(35.715298, 51.404343)
             )
         ) // Lat/Lon decimal degrees
+        var my_info2 = db?.cellPowerDao()?.getAll()
+        Log.d("map_act",my_info2.toString())
 
 //the overlay
 //        val mOverlay =

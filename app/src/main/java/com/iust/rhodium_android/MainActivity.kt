@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     var latitude : Double = 35.0
     var longitude : Double = 40.0
+    var record_size :Int =0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,10 +56,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "infos ...", Toast.LENGTH_SHORT).show()
             if (repeat==0){
                 repeat=1
+                text2.text = "Grabing Data ..."
             }else{
                 repeat=0
+                text2.text = "Process paused."
             }
-            text2.text = "repeat is : " + repeat.toString()
+
         }
         Mapbutton.setOnClickListener{
             var intent = Intent(this,map_act::class.java)
@@ -76,9 +79,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        repeat =1
+    override fun onPause() {
+        super.onPause()
+        repeat =0
     }
 
     override fun onStop() {
@@ -150,15 +153,18 @@ class MainActivity : AppCompatActivity() {
         Log.d("MyActivity",out.toString())
         var my_info : CellPower
         if (out["type"]=="2"){
-            my_info = CellPower(latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSSI = out["RSSI"] ,RxLev = out["RxLev"])
+            my_info = CellPower(type=2,latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSSI = out["RSSI"] ,RxLev = out["RxLev"])
         }else if (out["type"]=="3"){
-            my_info = CellPower(latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSCP = out["RSCP"])
+            my_info = CellPower(type =3 , latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSCP = out["RSCP"])
         }else{
-            my_info = CellPower(latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"])
+            my_info = CellPower(type = 4,latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"])
         }
         val INFOtext : TextView = findViewById(R.id.info_text)
+        val records : TextView = findViewById(R.id.record_size_text)
         db?.cellPowerDao()?.insert(my_info)
         var my_info2 = db?.cellPowerDao()?.getAll()
+        record_size = my_info2!!.size
+        records.text = "Number of records : " + record_size.toString()
         INFOtext.text = my_info2.toString() + "\n"
     }
 
@@ -166,7 +172,8 @@ class MainActivity : AppCompatActivity() {
         Dexter.withContext(this)
             .withPermissions(
                 Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
             )
             .withListener(object : MultiplePermissionsListener {
                 override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
@@ -181,7 +188,8 @@ class MainActivity : AppCompatActivity() {
                     ActivityCompat.requestPermissions(
                         this@MainActivity, arrayOf(
                             Manifest.permission.READ_PHONE_STATE,
-                            Manifest.permission.ACCESS_FINE_LOCATION
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
                         ), permit_s
                     )
 
@@ -233,18 +241,9 @@ class MainActivity : AppCompatActivity() {
         var netclass = getNetworkClass()
         Log.d("MyActivity",netclass)
         var map = hashMapOf<Any?, String?>()
-        var additional_info: String =""
         if (cellInfo is CellInfoGsm) {
             val cellIdentityGsm = cellInfo.cellIdentity
             val cellSignalGsm = cellInfo.cellSignalStrength
-            additional_info = ("cell identity " + cellIdentityGsm.cid + "\n"
-                    + "MCC " + cellIdentityGsm.mcc + "\n"
-                    + "MNC " + cellIdentityGsm.mnc + "\n"
-                    + "LAC " + cellIdentityGsm.lac + "\n"
-                    + "RSSI " + cellSignalGsm.dbm + "\n"
-                    + "RXlex  " + cellSignalGsm.asuLevel + "\n"
-                    + "level of strength " + cellSignalGsm.level + "\n")
-
             map["cell_identity"]=cellIdentityGsm.cid.toString()
             map["MCC"]=cellIdentityGsm.mcc.toString()
             map["MNC"]=cellIdentityGsm.mnc.toString()
@@ -257,22 +256,11 @@ class MainActivity : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val cellIdentityLte = cellInfo.cellIdentity
                 val cellSignalLte = cellInfo.cellSignalStrength
-                additional_info = ("cell identity " + cellIdentityLte.ci + "\n"
-                        + "MCC " + cellIdentityLte.mcc + "\n"
-                        + "MNC " + cellIdentityLte.mnc + "\n"
-                        + "physical cell " + cellIdentityLte.pci + "\n"
-                        + "TAC " + cellIdentityLte.tac + "\n"
-                        + "RSRP " + cellSignalLte.rsrp + "\n"
-                        + "RSRQ " + cellSignalLte.rsrq + "\n"
-                        + "CINR " + cellSignalLte.rssnr + "\n"
-                        + "level of strength" + cellSignalLte.level + "\n")
                 map["cell_identity"] = cellIdentityLte.ci.toString()
                 map["MCC"] = cellIdentityLte.mcc.toString()
                 map["MNC"] = cellIdentityLte.mnc.toString()
                 map["TAC"] = cellIdentityLte.tac.toString()
-
                 map["RSRP"] = cellSignalLte.rsrp.toString()
-
                 map["RSRQ"] = cellSignalLte.rsrq.toString()
                 map["CINR"] = cellSignalLte.rssnr.toString()
                 map["Level_of_strength"] = cellSignalLte.level.toString()
@@ -281,21 +269,11 @@ class MainActivity : AppCompatActivity() {
         } else if (cellInfo is CellInfoWcdma) {
             val cellIdentityWcdma = cellInfo.cellIdentity
             val cellSignalWcdma = cellInfo.cellSignalStrength
-            additional_info = ("cell identity " + cellIdentityWcdma.cid + "\n"
-                    + "MCC " + cellIdentityWcdma.mcc + "\n"
-                    + "MNC " + cellIdentityWcdma.mnc + "\n"
-                    + "LAC" + cellIdentityWcdma.lac + "\n"
-                    + "RSCP" + cellSignalWcdma.dbm + "\n"
-//                    + "EC/No" + cellInfo. + "\n"
-                    + "level of strength" + cellSignalWcdma.level + "\n"
-//                    + "local area umts" + cellIdentityWcdma.lac + "\n"
-                    )
             map["cell_identity"]=cellIdentityWcdma.cid.toString()
             map["MCC"]=cellIdentityWcdma.mcc.toString()
             map["MNC"]=cellIdentityWcdma.mnc.toString()
             map["LAC"]=cellIdentityWcdma.lac.toString()
             map["RSCP"]=cellSignalWcdma.dbm.toString()
-//            map["RxLev"]=cellSignalGsm.asuLevel
             map["Level_of_strength"]=cellSignalWcdma.level.toString()
             map["type"]="3"
         }

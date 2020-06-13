@@ -24,7 +24,6 @@ data class CellPower(
     val RSRP : String?=null,
     val RSRQ : String?=null,
     val CINR : String?=null,
-    val status : String?=null
-
-
+    val status : String?=null,
+    val type : Int?=null
 )
