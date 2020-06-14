@@ -81,6 +81,7 @@ class map_act : AppCompatActivity() {
         if (my_info2 != null) {
             for (i in my_info2) {
                 val cellMarker = Marker(map)
+
                 cellMarker.position = GeoPoint(i.latitude, i.longitude)
                 if(i.type==2)
                 {
@@ -150,7 +151,7 @@ class map_act : AppCompatActivity() {
                     {
                         cellMarker.setIcon(getResources().getDrawable(R.drawable.wcdmastrongicon));
                     }
-                    cellMarker.setTitle(discription);
+                    cellMarker.title = discription;
                     cellMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                     map.overlays.add(cellMarker)
                 }

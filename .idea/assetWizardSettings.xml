@@ -97,7 +97,20 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="imagePath" value="/private/var/folders/v9/md8dqhtd2tvbrygt6lnt958w0000gn/T/ic_android_black_24dp.xml" />
+                                                <entry key="color" value="5ce2ff" />
+                                                <entry key="imagePath" value="/private/var/folders/v9/md8dqhtd2tvbrygt6lnt958w0000gn/T/baseline_wifi_tethering_24.xml" />
+                                                <entry key="scalingPercent" value="104" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundClipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/wifi_tethering/baseline_wifi_tethering_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -136,6 +149,14 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="foregroundAssetType" value="CLIP_ART" />
+                                      <entry key="outputName" value="my_ic_launch" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -304,11 +325,6 @@
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
