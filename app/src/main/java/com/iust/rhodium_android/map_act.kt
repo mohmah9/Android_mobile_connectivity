@@ -16,6 +16,7 @@ import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.compass.CompassOverlay
 import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider
@@ -63,10 +64,10 @@ class map_act : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 16) map.setHasTransientState(true)
         val controller = map.getController()
         controller.setZoom(11.0)
-        val mLocationOverlay = MyLocationNewOverlay(map)
-        mLocationOverlay.enableFollowLocation()
-        mLocationOverlay.enableMyLocation()
-        map.getOverlays().add(mLocationOverlay)
+//        val mLocationOverlay = MyLocationNewOverlay(map)
+//        mLocationOverlay.enableFollowLocation()
+//        mLocationOverlay.enableMyLocation()
+//        map.getOverlays().add(mLocationOverlay)
         // mRotationGestureOverlay = new RotationGestureOverlay(ctx, map);
 //        mRotationGestureOverlay.setEnabled(true);
         val startPoint = GeoPoint(35.715298, 51.404343)
@@ -76,40 +77,87 @@ class map_act : AppCompatActivity() {
             CompassOverlay(ctx, InternalCompassOrientationProvider(ctx), map)
         mCompassOverlay.enableCompass()
         map.getOverlays().add(mCompassOverlay)
-        val items = ArrayList<OverlayItem>()
-        items.add(
-            OverlayItem(
-                "fuck diaanat",
-                "key or chi",
-                GeoPoint(35.715298, 51.404343)
-            )
-        ) // Lat/Lon decimal degrees
         var my_info2 = db?.cellPowerDao()?.getAll()
-        Log.d("map_act",my_info2.toString())
+        if (my_info2 != null) {
+            for (i in my_info2) {
+                val cellMarker = Marker(map)
+                cellMarker.position = GeoPoint(i.latitude, i.longitude)
+                if(i.type==2)
+                {
+                    var discription = "cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "LAC " + i.LAC + "\n"+ "RSSI " + i.RSSI + "\n"+ "RXlex  " + i.RxLev + "\n";
+                    if(i.Level_of_strength == "1")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.gsmveryweakicon));
+                    }
+                    else if(i.Level_of_strength == "2")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.gsmokicon));
+                    }
+                    else if(i.Level_of_strength == "3")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.gsmweakicon));
+                    }
+                    else
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.gsmstrongicon));
+                    }
+//                    cellMarker.setIcon(getResources().getDrawable(R.drawable.gsmveryweakicon));
+                    cellMarker.setTitle(discription);
+                    cellMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    map.overlays.add(cellMarker)
 
-//the overlay
-//        val mOverlay =
-//            ItemizedOverlayWithFocus(
-//                items,
-//                object : OnItemGestureListener<OverlayItem?> {
-//                    override fun onItemSingleTapUp(
-//                        index: Int,
-//                        item: OverlayItem?
-//                    ): Boolean {
-//                        //do something
-//                        return true
-//                    }
-//
-//                    override fun onItemLongPress(
-//                        index: Int,
-//                        item: OverlayItem?
-//                    ): Boolean {
-//                        return false
-//                    }
-//                }, ctx
-//            )
-//        mOverlay.setFocusItemsOnTap(true)
-//        map.getOverlays().add(mOverlay)
+                }
+                if(i.type==4)
+                {
+                    var discription =  "cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "TAC " + i.TAC + "\n"+ "RSRP " + i.RSRP + "\n"+ "RSRQ " + i.RSRQ + "\n"+ "CINR " + i.CINR + "\n";
+                    if(i.Level_of_strength == "1")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.lteveryweakicon));
+                    }
+                    else if(i.Level_of_strength == "2")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.lteokicon));
+                    }
+                    else if(i.Level_of_strength == "3")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.lteweakicon));
+                    }
+                    else
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.ltestrongicon));
+                    }
+                        cellMarker.setTitle(discription);
+                    cellMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    map.overlays.add(cellMarker)
+
+                }
+                if(i.type==3)
+                {
+                    var discription ="cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "LAC" + i.LAC + "\n"+ "RSCP" + i.RSCP + "\n";
+                    if(i.Level_of_strength == "1")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.wcdmaveryweakicon));
+                    }
+                    else if(i.Level_of_strength == "2")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.wcdmaokicon));
+                    }
+                    else if(i.Level_of_strength == "3")
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.wcdmaweakicon));
+                    }
+                    else
+                    {
+                        cellMarker.setIcon(getResources().getDrawable(R.drawable.wcdmastrongicon));
+                    }
+                    cellMarker.setTitle(discription);
+                    cellMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                    map.overlays.add(cellMarker)
+                }
+            }
+        }
+
+
     }
 
 //    public override fun onResume() {

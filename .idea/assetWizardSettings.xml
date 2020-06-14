@@ -25,7 +25,8 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="/private/var/folders/v9/md8dqhtd2tvbrygt6lnt958w0000gn/T/ic_android_black_24dp.xml" />
-                                                <entry key="opacityPercent" value="60" />
+                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -37,9 +38,9 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$USER_HOME$/Desktop/4g.svg.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Desktop/3g.svg.png" />
                                                 <entry key="opacityPercent" value="80" />
-                                                <entry key="paddingPercent" value="15" />
+                                                <entry key="paddingPercent" value="10" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -52,6 +53,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -63,6 +66,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -73,8 +78,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Desktop/4g.svg.png" />
-                                      <entry key="outputName" value="4g_icon_strong" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Desktop/3g.svg.png" />
+                                      <entry key="outputName" value="wcdmastrongicon" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="228b22" />
                                     </map>
