@@ -49,12 +49,11 @@ class MainActivity : AppCompatActivity() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val Actionbutton : Button = findViewById(R.id.info_button)
         val Mapbutton : Button = findViewById(R.id.map_btn)
-
         val text2 : TextView = findViewById(R.id.text2)
-        getLastLocation()
         Actionbutton.setOnClickListener{
-            Toast.makeText(this, "infos ...", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "infos ...", Toast.LENGTH_SHORT).show()
             if (repeat==0){
+                getLastLocation()
                 repeat=1
                 text2.text = "Grabing Data ..."
             }else{
@@ -159,13 +158,13 @@ class MainActivity : AppCompatActivity() {
         }else{
             my_info = CellPower(type = 4,latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"])
         }
-        val INFOtext : TextView = findViewById(R.id.info_text)
+//        val INFOtext : TextView = findViewById(R.id.info_text)
         val records : TextView = findViewById(R.id.record_size_text)
         db?.cellPowerDao()?.insert(my_info)
         var my_info2 = db?.cellPowerDao()?.getAll()
         record_size = my_info2!!.size
         records.text = "Number of records : " + record_size.toString()
-        INFOtext.text = my_info2.toString() + "\n"
+//        INFOtext.text = my_info2.toString() + "\n"
     }
 
     private fun permissiongranter() {
