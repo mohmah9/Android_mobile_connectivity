@@ -7,13 +7,13 @@
       </config>
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="93122192-fddf-4ca0-aa5d-720578d29ce7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_base_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_location_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_places_placereport_17_0_0_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_17_0_0_aar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator-enh.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -31,14 +31,18 @@
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/data/model/CellPower.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/iust/rhodium_android/data/model/CellPower.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_API_28" />
   <component name="ExternalProjectsData">
@@ -57,11 +61,18 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
+        <option value="resourceFile" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="5" />
+    <option name="y" value="23" />
+    <option name="width" value="1760" />
+    <option name="height" value="828" />
   </component>
   <component name="ProjectId" id="1dAMnZA7afHdS4QqJhOdpYyN9fs" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -73,13 +84,26 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
+    <property name="android.recentlyUsedThemes" value="Theme.AppCompat.DayNight" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1592146941393" />
+    <property name="not.eligible.for.single.variant.sync" value="true" />
+    <property name="project.structure.last.edited" value="SDK Location" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.iust.rhodium_android.data" />
+    </key>
+    <key name="android.template.-17705492">
+      <recent name="com.iust.rhodium_android" />
     </key>
   </component>
   <component name="RunManager">
@@ -156,6 +180,18 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
+    <state x="245" y="176" key="#PSD" timestamp="1592000654648">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="245" y="176" key="#PSD/0.23.1440.828@0.23.1440.828" timestamp="1592000654648" />
+    <state x="693" y="313" width="524" height="487" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog" timestamp="1592033671583">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="693" y="313" width="524" height="487" key="#com.intellij.codeInsight.editorActions.RestoreReferencesDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1592033671583" />
+    <state x="458" y="191" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1592001855964">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="458" y="191" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1440.828@0.23.1440.828" timestamp="1592001855964" />
     <state x="742" y="203" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1591881234953">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -168,21 +204,38 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="543" y="313" width="824" height="487" key="AndroidCreateResourceDirectoryDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1591878088097" />
-    <state width="937" height="276" key="GridCell.Tab.0.bottom" timestamp="1591970189292">
+    <state x="407" y="246" width="824" height="487" key="AndroidCreateResourceFileDialog" timestamp="1592149013691">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="407" y="246" key="AndroidCreateResourceFileDialog/0.23.1440.828@0.23.1440.828" timestamp="1592149013691" />
+    <state x="543" y="313" width="824" height="487" key="AndroidCreateResourceFileDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1592038084313" />
+    <state x="543" y="263" width="824" height="587" key="AndroidThemeDialog" timestamp="1592036893754">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="937" height="276" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189292" />
-    <state width="937" height="276" key="GridCell.Tab.0.center" timestamp="1591970189291">
+    <state x="543" y="263" width="824" height="587" key="AndroidThemeDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1592036893754" />
+    <state width="937" height="276" key="GridCell.Tab.0.bottom" timestamp="1592206117938">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="937" height="276" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189291" />
-    <state width="937" height="276" key="GridCell.Tab.0.left" timestamp="1591970189291">
+    <state width="1398" height="172" key="GridCell.Tab.0.bottom/0.23.1440.828@0.23.1440.828" timestamp="1592164903273" />
+    <state width="937" height="276" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1592206117938" />
+    <state width="937" height="276" key="GridCell.Tab.0.center" timestamp="1592206117937">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="937" height="276" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189291" />
-    <state width="937" height="276" key="GridCell.Tab.0.right" timestamp="1591970189291">
+    <state width="1398" height="172" key="GridCell.Tab.0.center/0.23.1440.828@0.23.1440.828" timestamp="1592164903273" />
+    <state width="937" height="276" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1592206117937" />
+    <state width="937" height="276" key="GridCell.Tab.0.left" timestamp="1592206117937">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="937" height="276" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1591970189291" />
+    <state width="1398" height="172" key="GridCell.Tab.0.left/0.23.1440.828@0.23.1440.828" timestamp="1592164903272" />
+    <state width="937" height="276" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1592206117937" />
+    <state width="937" height="276" key="GridCell.Tab.0.right" timestamp="1592206117937">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1398" height="172" key="GridCell.Tab.0.right/0.23.1440.828@0.23.1440.828" timestamp="1592164903273" />
+    <state width="937" height="276" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1592206117937" />
+    <state x="390" y="269" key="com.intellij.ide.util.TipDialog" timestamp="1592000302235">
+      <screen x="0" y="23" width="1440" height="828" />
+    </state>
+    <state x="390" y="269" key="com.intellij.ide.util.TipDialog/0.23.1440.828@0.23.1440.828" timestamp="1592000302235" />
   </component>
 </project>
