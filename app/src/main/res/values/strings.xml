@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rhodium-android</string>
+    <string name="app_name">final-android</string>
 
     <!--
     This string is used for square devices and overridden by hello_world in

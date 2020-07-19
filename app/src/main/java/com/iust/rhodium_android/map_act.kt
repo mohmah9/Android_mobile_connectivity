@@ -85,7 +85,7 @@ class map_act : AppCompatActivity() {
                 cellMarker.position = GeoPoint(i.latitude, i.longitude)
                 if(i.type==2)
                 {
-                    var discription = "cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "LAC " + i.LAC + "\n"+ "RSSI " + i.RSSI + "\n"+ "RXlex  " + i.RxLev + "\n";
+                    var discription = "cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "LAC " + i.LAC + "\n"+ "RSSI " + i.RSSI + "\n"+ "RXlex  " + i.RxLev + "\n" +"downspeed " +i.downspeed+"kbps"+"\n" +"upspeed " +i.upspeed+"kbps"+"\n"+"latency " +i.latency+"\n"+"jitter " +i.jitter+"\n" + "content_ping " +i.content_latency+"\n";
                     if(i.Level_of_strength == "1")
                     {
                         cellMarker.setIcon(getResources().getDrawable(R.drawable.gsmveryweakicon));
@@ -110,7 +110,7 @@ class map_act : AppCompatActivity() {
                 }
                 if(i.type==4)
                 {
-                    var discription =  "cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "TAC " + i.TAC + "\n"+ "RSRP " + i.RSRP + "\n"+ "RSRQ " + i.RSRQ + "\n"+ "CINR " + i.CINR + "\n";
+                    var discription =  "cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "TAC " + i.TAC + "\n"+ "RSRP " + i.RSRP + "\n"+ "RSRQ " + i.RSRQ + "\n"+ "CINR " + i.CINR + "\n"+"downspeed " +i.downspeed+" kbps"+"\n" +"upspeed " +i.upspeed+" kbps"+"\n"+"latency " +i.latency+"\n"+"jitter " +i.jitter+"\n" + "content_ping " +i.content_latency+"\n";
                     if(i.Level_of_strength == "1")
                     {
                         cellMarker.setIcon(getResources().getDrawable(R.drawable.lteveryweakicon));
@@ -134,7 +134,7 @@ class map_act : AppCompatActivity() {
                 }
                 if(i.type==3)
                 {
-                    var discription ="cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "LAC" + i.LAC + "\n"+ "RSCP" + i.RSCP + "\n";
+                    var discription ="cell identity " + i.cell_identity + "\n"+ "MCC " + i.MCC + "\n"+ "MNC " + i.MNC + "\n"+ "LAC" + i.LAC + "\n"+ "RSCP" + i.RSCP + "\n" +"downspeed " +i.downspeed+"kbps"+"\n" +"upspeed " +i.upspeed+"kbps"+"\n"+"latency " +i.latency+"\n"+"jitter " +i.jitter+"\n" + "content_ping " +i.content_latency+"\n";
                     if(i.Level_of_strength == "1")
                     {
                         cellMarker.setIcon(getResources().getDrawable(R.drawable.wcdmaveryweakicon));

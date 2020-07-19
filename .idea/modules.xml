@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Rhodium-android.iml" filepath="$PROJECT_DIR$/.idea/modules/Rhodium-android.iml" group="Rhodium-android" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="Rhodium-android/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="final-android/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/final-android.iml" filepath="$PROJECT_DIR$/.idea/modules/final-android.iml" group="final-android" />
     </modules>
   </component>
 </project>

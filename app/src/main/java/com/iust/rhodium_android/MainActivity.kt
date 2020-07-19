@@ -7,6 +7,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -25,7 +28,9 @@ import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-
+import java.io.IOException
+import java.lang.Math.abs
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,11 +45,21 @@ class MainActivity : AppCompatActivity() {
     var latitude : Double = 35.0
     var longitude : Double = 40.0
     var record_size :Int =0
+
+    var latency : Long =0
+    var content_latency :Long =0
+    var jitter  =0
+    var jitter_counter= 0
+    var downSpeed: Int =0
+    var upSpeed: Int =0
+    lateinit var cm: ConnectivityManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         permissiongranter()
         tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         db = AppDatabase.getAppDataBase(context = this)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val Actionbutton : Button = findViewById(R.id.info_button)
@@ -132,31 +147,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getinfo(){
+        speedmeter()
+        latency = latencycal("8.8.8.8")
+        content_latency = contlatencycal("cdn.filimo.com")
+        Log.d("content ",content_latency.toString())
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             permissiongranter()
         }
-        var ci1 =    tm.allCellInfo
+        var ci1 = tm.allCellInfo
         Log.d("MyActivity", ci1.toString())
         val out = getCellInfo(ci1.get(0))
         Log.d("MyActivity",out.toString())
         var my_info : CellPower
         if (out["type"]=="2"){
-            my_info = CellPower(type=2,latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSSI = out["RSSI"] ,RxLev = out["RxLev"])
+            my_info = CellPower(type=2,latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSSI = out["RSSI"] ,RxLev = out["RxLev"] ,downspeed = downSpeed , upspeed = upSpeed ,latency = latency.toString() ,jitter = jitter.toString() ,content_latency = content_latency.toString())
         }else if (out["type"]=="3"){
-            my_info = CellPower(type =3 , latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSCP = out["RSCP"])
+            my_info = CellPower(type =3 , latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],LAC = out["LAC"],RSCP = out["RSCP"] ,downspeed = downSpeed , upspeed = upSpeed ,latency = latency.toString() ,jitter = jitter.toString() ,content_latency = content_latency.toString())
         }else{
-            my_info = CellPower(type = 4,latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"])
+            my_info = CellPower(type = 4,latitude = latitude,longitude = longitude,Level_of_strength = out["Level_of_strength"],MCC = out["MCC"],MNC = out["MNC"],plmn = out["plmn"],cell_identity = out["cell_identity"],net_type = out["net_type"],TAC = out["TAC"],RSRP = out["RSRP"],RSRQ = out["RSRQ"],CINR = out["CINR"] ,downspeed = downSpeed , upspeed = upSpeed ,latency = latency.toString() ,jitter = jitter.toString() ,content_latency = content_latency.toString())
         }
 //        val INFOtext : TextView = findViewById(R.id.info_text)
         val records : TextView = findViewById(R.id.record_size_text)
@@ -280,5 +292,75 @@ class MainActivity : AppCompatActivity() {
         map["plmn"] = tm.getNetworkOperator().toString()
         return map
     }
+    private fun speedmeter() {
+        var netInfo: NetworkInfo = cm.getActiveNetworkInfo()
+        if (netInfo.isConnected){
+            val nc: NetworkCapabilities = cm.getNetworkCapabilities(cm.activeNetwork)
+            downSpeed = nc.getLinkDownstreamBandwidthKbps()
+            upSpeed= nc.getLinkUpstreamBandwidthKbps()
+        }
+    }
+    private fun latencycal(addr: String) :Long {
+        val runtime = Runtime.getRuntime()
+        var pingg : Long =999999999
+        try {
+            var a : Long = (System.currentTimeMillis() %100000)
+            val IpProcess = runtime.exec("/system/bin/ping -c 1 "+addr)
+            val mExitValue  = IpProcess.waitFor(2,TimeUnit.SECONDS)
+            if (mExitValue ){
+                var b : Long = (System.currentTimeMillis() %100000)
+                if(b<=a){
+                    pingg = (100000 - a) + b
+                }else{
+                    pingg = b - a
+                }
+            }else{
+                pingg = 999999999
+            }
+            if (jitter_counter != 0 && pingg != 999999999.toLong() && latency != 999999999.toLong()){
+                var pingg2 = pingg.toInt()
+                var pingg3 = kotlin.math.abs((pingg2 - latency).toInt())
+                jitter = (((jitter_counter-1)*jitter)+(pingg3)) / jitter_counter
+                jitter_counter++
+            }else if (jitter_counter == 0){
+                jitter_counter++
+            }
+//            latency = pingg
+            Log.d("jitter :",jitter.toString())
+            Log.d("ping :",pingg.toString())
+        } catch (ignore: InterruptedException) {
+            ignore.printStackTrace()
+            Log.d(""," Exception:$ignore")
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.d("", " Exception:$e")
+        }
+        return pingg
+    }
+    private fun contlatencycal(addr: String) :Long {
+        val runtime = Runtime.getRuntime()
+        var pingg : Long =999999999
+        try {
+            var a : Long = (System.currentTimeMillis() %100000)
+            val IpProcess = runtime.exec("/system/bin/ping -c 1 "+addr)
+            val mExitValue  = IpProcess.waitFor(2,TimeUnit.SECONDS)
+            if (mExitValue ){
+                var b : Long = (System.currentTimeMillis() %100000)
+                if(b<=a){
+                    pingg = (100000 - a) + b
+                }else{
+                    pingg = b - a
+                }
+            }else{
+                pingg = 999999999
+            }
+        } catch (ignore: InterruptedException) {
+            ignore.printStackTrace()
+            Log.d(""," Exception:$ignore")
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.d("", " Exception:$e")
+        }
+        return pingg
+    }
 }
-

@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Rhodium-android"
+rootProject.name = "final-android"

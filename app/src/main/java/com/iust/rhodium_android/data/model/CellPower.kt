@@ -25,5 +25,10 @@ data class CellPower(
     val RSRQ : String?=null,
     val CINR : String?=null,
     val status : String?=null,
-    val type : Int?=null
+    val type : Int?=null,
+    val downspeed : Int?=null,
+    val upspeed : Int?=null,
+    val latency : String?=null,
+    val jitter : String?=null,
+    val content_latency : String?=null
 )
