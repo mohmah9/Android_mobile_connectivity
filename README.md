@@ -2,6 +2,11 @@
 
 This app is a great endeavour for measuring and showing mobile network data which are captured in real-time manner and then being displayed on map.
 
+## Contributers
+
+Mohamad Mahdi Yadegar  96522051
+Seyed Hamidreza Sanaei karahroodi  96521137
+
 ## librarires
 
 ```gradle
@@ -39,3 +44,5 @@ In map activity the data is being queried from database and being shown on map a
 ![second screenshot](screen2.jpg)
 
 ![third screenshot](screen3.jpg)
+
+![fourth screenshot](screen4.jpg)
