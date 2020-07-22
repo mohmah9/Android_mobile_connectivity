@@ -28,6 +28,9 @@ The OSM which is an open source map library is what you see in the map section.
 And google play service for capturing location.
 
 Also the network data is coming from android [telephony manager](https://developer.android.com/reference/android/telephony/package-summary).
+
+Some features has gotten from Connectivity manager.
+
 ## Implementation
 
 We used latest version of kotlin and gradle to present the best performance possible on android devices.
