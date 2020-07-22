@@ -1,4 +1,4 @@
-## Rhodium android project
+## final android project
 
 This app is a great endeavour for measuring and showing mobile network data which are captured in real-time manner and then being displayed on map.
 
