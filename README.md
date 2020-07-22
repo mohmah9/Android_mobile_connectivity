@@ -41,6 +41,8 @@ when the start button is pressed ,the app starts getting location by google serv
 
 In map activity the data is being queried from database and being shown on map according to the fields.
 
+Aside from connection strength and quality, ping and jitter to 8.8.8.8 server is computed(jitter computation is manual). Also ping is calculated to filimo cdn as content provider. Also download and upload bandwith come from android connectivity manager.
+
 ## Running example
 
 ![first screenshot](screen1.jpg)
